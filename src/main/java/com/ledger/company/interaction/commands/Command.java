@@ -1,5 +1,7 @@
 package com.ledger.company.interaction.commands;
 
+import com.ledger.company.exceptions.LedgerCoException;
+
 public interface Command {
-    void execute(String[] params);
+    String execute(String[] params) throws LedgerCoException;
 }

@@ -2,15 +2,10 @@ package com.ledger.company.exceptions;
 
 import com.ledger.company.utils.MessageConstants;
 
-public class CommandNotFoundException extends Exception {
-    private final String name;
+public class CommandNotFoundException extends LedgerCoException {
 
-    public CommandNotFoundException(String name) {
-        this.name = name;
+    public CommandNotFoundException(String commandName) {
+        super(String.format(MessageConstants.COMMAND_NOT_FOUND, commandName));
     }
 
-    @Override
-    public String getMessage() {
-        return String.format(MessageConstants.COMMAND_NOT_FOUND, name);
-    }
 }

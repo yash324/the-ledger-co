@@ -1,5 +1,6 @@
 package com.ledger.company.client;
 
+import com.ledger.company.exceptions.LedgerCoException;
 import com.ledger.company.handler.CommandHandler;
 import com.ledger.company.interaction.CommandFactory;
 import com.ledger.company.interaction.commands.Command;
@@ -51,7 +52,7 @@ public class ReadClientTest {
     }
 
     @Test
-    public void processInputLine_commandSuccess() {
+    public void processInputLine_commandSuccess() throws LedgerCoException {
         Command mockCommand = Mockito.mock(Command.class);
         commandFactory.addCommand("DUMMY", mockCommand);
         ReadClient readClient = new FileReadClient(new BufferedReader(new StringReader("DUMMY")), commandFactory);
@@ -64,18 +65,18 @@ public class ReadClientTest {
     public void processInputLineShouldPrintErrorIfCommandFailed() {
         ReadClient readClient = new FileReadClient(new BufferedReader(new StringReader("ADDBANK")), commandFactory);
         assertDoesNotThrow(readClient::handleInput);
-        assertEquals("Error: Command ADDBANK not found" + System.lineSeparator(), outContent.toString());
+        assertEquals("Error: Command ADDBANK not found | line:1" + System.lineSeparator(), outContent.toString());
     }
 
     @Test
-    public void processInputLineShouldPrintErrorIfUnknownExceptionOccurred() {
+    public void processInputLineShouldPrintErrorIfUnknownExceptionOccurred() throws LedgerCoException {
         Command mockCommand = Mockito.mock(Command.class);
-        doThrow(new NullPointerException("dummy")).when(mockCommand).execute(any());
+        when(mockCommand.execute(any())).thenThrow(new NullPointerException());
         commandFactory.addCommand("DUMMY", mockCommand);
         ReadClient readClient = new FileReadClient(new BufferedReader(new StringReader("DUMMY")), commandFactory);
 
         assertDoesNotThrow(readClient::handleInput);
         verify(mockCommand, times(1)).execute(any());
-        assertEquals(MessageConstants.INTERNAL_SERVER_ERROR + System.lineSeparator(), outContent.toString());
+        assertEquals(String.format(MessageConstants.INTERNAL_SERVER_ERROR, 1) + System.lineSeparator(), outContent.toString());
     }
 }

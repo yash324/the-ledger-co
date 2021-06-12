@@ -1,6 +1,6 @@
 package com.ledger.company.client;
 
-import com.ledger.company.exceptions.CommandNotFoundException;
+import com.ledger.company.exceptions.LedgerCoException;
 import com.ledger.company.interaction.CommandFactory;
 import com.ledger.company.utils.MessageConstants;
 
@@ -18,9 +18,11 @@ public abstract class ReadClient {
     }
 
     public void handleInput() throws IOException {
+        int lineCount = 0;
         try {
             while (true) {
                 String inputLine = this.inputReader.readLine();
+                lineCount++;
                 if(inputLine == null) {
                     break;
                 }
@@ -28,26 +30,29 @@ public abstract class ReadClient {
                 if(inputLine.isEmpty()) {
                     continue;
                 }
-                processInputLine(inputLine);
+                processInputLine(inputLine, lineCount);
             }
         } finally {
             inputReader.close();
         }
     }
 
-    private void processInputLine(String inputLine) {
+    private void processInputLine(String inputLine, int lineNumber) {
         String[] inputChunks = inputLine.split(" ");
 
         String command = inputChunks[0];
         String[] params = Arrays.copyOfRange(inputChunks, 1, inputChunks.length);
 
         try {
-            commandFactory.executeCommand(command, params);
+            String result = commandFactory.executeCommand(command, params);
+            if (result != null && !result.isEmpty()){
+                System.out.println(result);
+            }
         } catch (Exception ex) {
-            if (ex instanceof CommandNotFoundException) {
-                System.out.println(String.format(MessageConstants.ERROR_MESSAGE, ex.getMessage()));
+            if (ex instanceof LedgerCoException) {
+                System.out.println(String.format(MessageConstants.ERROR_MESSAGE, ex.getMessage(), lineNumber));
             } else {
-                System.out.println(MessageConstants.INTERNAL_SERVER_ERROR);
+                System.out.println(String.format(MessageConstants.INTERNAL_SERVER_ERROR, lineNumber));
             }
         }
     }

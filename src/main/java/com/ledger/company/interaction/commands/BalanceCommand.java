@@ -10,7 +10,8 @@ public class BalanceCommand implements Command {
     }
 
     @Override
-    public void execute(String[] params) {
+    public String execute(String[] params) {
         // TODO
+        return "";
     }
 }

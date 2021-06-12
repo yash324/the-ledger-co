@@ -1,6 +1,7 @@
 package com.ledger.company.interaction;
 
 import com.ledger.company.exceptions.CommandNotFoundException;
+import com.ledger.company.exceptions.LedgerCoException;
 import com.ledger.company.handler.CommandHandler;
 import com.ledger.company.interaction.commands.Command;
 import org.junit.jupiter.api.BeforeAll;
@@ -9,8 +10,7 @@ import org.mockito.Mockito;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Matchers.any;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.*;
 
 class CommandFactoryTest {
     private static CommandFactory commandFactory;
@@ -34,10 +34,22 @@ class CommandFactoryTest {
     }
 
     @Test
-    public void executeCommand_shouldExecuteCommand() {
+    public void executeCommand_shouldExecuteCommand() throws LedgerCoException {
         Command mockCommand = Mockito.mock(Command.class);
+        when(mockCommand.execute(any())).thenReturn("result");
         commandFactory.addCommand("DUMMY", mockCommand);
-        assertDoesNotThrow(() -> commandFactory.executeCommand("DUMMY", null));
+
+        assertEquals("result", commandFactory.executeCommand("DUMMY", null));
+        verify(mockCommand, times(1)).execute(any());
+    }
+
+    @Test
+    public void executeCommand_shouldThrowExceptionIfCommandThrowsException() throws LedgerCoException {
+        Command mockCommand = Mockito.mock(Command.class);
+        when(mockCommand.execute(any())).thenThrow(new LedgerCoException("some-error"));
+        commandFactory.addCommand("DUMMY", mockCommand);
+
+        assertThrows(LedgerCoException.class, () -> commandFactory.executeCommand("DUMMY", null));
         verify(mockCommand, times(1)).execute(any());
     }
 }

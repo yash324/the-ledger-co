@@ -9,7 +9,7 @@ public class LoanCommand implements Command {
     }
 
     @Override
-    public void execute(String[] params) {
-      // TODO
+    public String execute(String[] params) {
+        return "";
     }
 }

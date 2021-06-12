@@ -1,6 +1,7 @@
 package com.ledger.company.interaction;
 
 import com.ledger.company.exceptions.CommandNotFoundException;
+import com.ledger.company.exceptions.LedgerCoException;
 import com.ledger.company.handler.CommandHandler;
 import com.ledger.company.interaction.commands.BalanceCommand;
 import com.ledger.company.interaction.commands.Command;
@@ -31,9 +32,9 @@ public class CommandFactory {
         commands.put(name, command);
     }
 
-    public void executeCommand(String name, String[] params) throws CommandNotFoundException {
+    public String executeCommand(String name, String[] params) throws LedgerCoException {
         if(commands.containsKey(name)) {
-            commands.get(name).execute(params);
+            return commands.get(name).execute(params);
         } else {
             throw new CommandNotFoundException(name);
         }
