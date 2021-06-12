@@ -62,6 +62,14 @@ public class ReadClientTest {
     }
 
     @Test
+    public void processInputLine_commandOutputSuccess() {
+        String input = "LOAN IDIDI Dale 5000 1 6 \n BALANCE IDIDI Dale 3";
+        ReadClient readClient = new FileReadClient(new BufferedReader(new StringReader(input)), commandFactory);
+        assertDoesNotThrow(readClient::handleInput);
+        assertEquals("IDIDI Dale 1326 9" + System.lineSeparator(), outContent.toString());
+    }
+
+    @Test
     public void processInputLineShouldPrintErrorIfCommandFailed() {
         ReadClient readClient = new FileReadClient(new BufferedReader(new StringReader("ADDBANK")), commandFactory);
         assertDoesNotThrow(readClient::handleInput);

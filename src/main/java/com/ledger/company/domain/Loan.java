@@ -52,4 +52,10 @@ public class Loan {
         return principalAmount + (principalAmount * periodInYears * interestRate / 100);
     }
 
+    public Balance getBalance(int emiNumber) {
+        float amountPaid = getAmountPaid(emiNumber);
+        float totalPayableAmount = getTotalPayableAmount();
+        int emisRemaining = (int) Math.ceil((totalPayableAmount - amountPaid) / getEmiAmount(totalPayableAmount));
+        return new Balance(null, this.borrowerName, (int) amountPaid, emisRemaining);
+    }
 }

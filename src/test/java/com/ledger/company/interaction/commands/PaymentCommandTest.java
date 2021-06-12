@@ -23,14 +23,14 @@ class PaymentCommandTest {
 
     @Test
     public void execute_shouldThrowExceptionIfValidationFails() {
-        String[] params = {"IDIDI", "Dale", "10000a", "3", "5.1"};
+        String[] params = {"IDIDI", "DALE", "10000a", "3", "5.1"};
         assertThrows(InvalidParameterException.class, () -> paymentCommand.execute(params));
         verifyZeroInteractions(commandHandler);
     }
 
     @Test
     public void execute_shouldRunSuccessfully() {
-        String[] params = {"IDIDI", "Dale", "10000", "3"};
+        String[] params = {"IDIDI", "DALE", "10000", "3"};
         assertDoesNotThrow(() -> paymentCommand.execute(params));
     }
 
@@ -50,9 +50,9 @@ class PaymentCommandTest {
 
     @Test
     public void validateParams_shouldValidateIntEmiCount() {
-        String[] amountInvalidParams = {"IDIDI", "Dale", "300", "x"};
+        String[] emiCountInvalidParams = {"IDIDI", "DALE", "300", "x"};
         try {
-            paymentCommand.validateParams(amountInvalidParams);
+            paymentCommand.validateParams(emiCountInvalidParams);
             fail("should go to exception block");
         } catch (LedgerCoException ex) {
             assertTrue(ex instanceof InvalidParameterException);
@@ -62,7 +62,7 @@ class PaymentCommandTest {
 
     @Test
     public void validateParams_shouldValidateFloatAmount() {
-        String[] amountInvalidParams = {"IDIDI", "Dale", "a.0", "3"};
+        String[] amountInvalidParams = {"IDIDI", "DALE", "a.0", "3"};
         try {
             paymentCommand.validateParams(amountInvalidParams);
             fail("should go to exception block");
@@ -74,7 +74,7 @@ class PaymentCommandTest {
 
     @Test
     public void validateParams_shouldValidateNegativeAmountParam(){
-        String[] amountInvalidParams = {"IDIDI", "Dale", "-14", "5"};
+        String[] amountInvalidParams = {"IDIDI", "DALE", "-14", "5"};
         try {
             paymentCommand.validateParams(amountInvalidParams);
             fail("should go to exception block");
@@ -86,7 +86,7 @@ class PaymentCommandTest {
 
     @Test
     public void validateParams_shouldValidateNegativeEmiCountParam(){
-        String[] emiCountInvalidParams = {"IDIDI", "Dale", "14000", "-2"};
+        String[] emiCountInvalidParams = {"IDIDI", "DALE", "14000", "-2"};
         try {
             paymentCommand.validateParams(emiCountInvalidParams);
             fail("should go to exception block");

@@ -34,4 +34,14 @@ public class Bank {
         }
         foundLoan.get().addLumpSumPayment(amount, emiNumber);
     }
+
+    public Balance getLoanBalance(String borrowerName, int emiNumber) throws LedgerCoException {
+        Optional<Loan> foundLoan = loans.stream().filter(loan -> loan.getBorrowerName().equalsIgnoreCase(borrowerName)).findFirst();
+        if (!foundLoan.isPresent()) {
+            throw new LoanNotFoundException(name, borrowerName);
+        }
+        Balance balance = foundLoan.get().getBalance(emiNumber);
+        balance.setBankName(this.name);
+        return balance;
+    }
 }

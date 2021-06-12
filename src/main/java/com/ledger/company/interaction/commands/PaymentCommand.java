@@ -20,7 +20,8 @@ public class PaymentCommand implements Command {
     @Override
     public String execute(String[] params) throws LedgerCoException {
         validateParams(params);
-        return commandHandler.payLumpSum(params[0], params[1], parseFloat(params[2]), parseInt(params[3]));
+        commandHandler.payLumpSum(params[0], params[1], parseFloat(params[2]), parseInt(params[3]));
+        return null;
     }
 
     public void validateParams(String[] params) throws LedgerCoException {

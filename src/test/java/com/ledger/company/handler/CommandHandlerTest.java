@@ -1,5 +1,6 @@
 package com.ledger.company.handler;
 
+import com.ledger.company.domain.Balance;
 import com.ledger.company.domain.Loan;
 import com.ledger.company.domain.LumpSumPayment;
 import com.ledger.company.exceptions.BankNotFoundException;
@@ -8,7 +9,8 @@ import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class CommandHandlerTest {
 
@@ -60,6 +62,25 @@ class CommandHandlerTest {
         assertEquals(1, lumpSumPayments.size());
         assertEquals(1000, lumpSumPayments.get(0).getAmount());
         assertEquals(5, lumpSumPayments.get(0).getEmiNumber());
+    }
+
+    @Test
+    void getBalance_shouldThrowExceptionIfBankDoesntExist() throws LedgerCoException {
+        CommandHandler commandHandler = new CommandHandler();
+        commandHandler.createLoan("IDIDI", "HARRY", 2000, 2, 3);
+        assertThrows(BankNotFoundException.class, () -> commandHandler.getBalance("MBI", "DALE", 5));
+    }
+
+    @Test
+    void getBalance_shouldReturnSuccessfully() throws LedgerCoException {
+        CommandHandler commandHandler = new CommandHandler();
+        commandHandler.createLoan("IDIDI", "HARRY", 2000, 2, 3);
+        commandHandler.payLumpSum("IDIDI", "HARRY", 1000, 5);
+        Balance balance = commandHandler.getBalance("IDIDI", "HARRY", 5);
+        assertEquals("IDIDI", balance.getBankName());
+        assertEquals("HARRY", balance.getBorrowerName());
+        assertEquals(1445, balance.getAmountPaid());
+        assertEquals(8, balance.getEmisRemaining());
     }
 
 }

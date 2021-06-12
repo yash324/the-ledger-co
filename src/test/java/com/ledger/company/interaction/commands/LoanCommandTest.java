@@ -23,20 +23,20 @@ class LoanCommandTest {
 
     @Test
     public void execute_shouldThrowExceptionIfValidationFails() {
-        String[] params = {"IDIDI", "Dale", "10000a", "3", "5.1"};
+        String[] params = {"IDIDI", "DALE", "10000a", "3", "5.1"};
         assertThrows(InvalidParameterException.class, () -> loanCommand.execute(params));
         verifyZeroInteractions(commandHandler);
     }
 
     @Test
     public void execute_shouldRunSuccessfully() {
-        String[] params = {"IDIDI", "Dale", "10000", "3", "5"};
+        String[] params = {"IDIDI", "DALE", "10000", "3", "5"};
         assertDoesNotThrow(() -> loanCommand.execute(params));
     }
 
     @Test
     public void validateParams_shouldValidateNegativeParams(){
-        String[] amountInvalidParams = {"IDIDI", "Dale", "-14", "5", "5"};
+        String[] amountInvalidParams = {"IDIDI", "DALE", "-14", "5", "5"};
         try {
             loanCommand.validateParams(amountInvalidParams);
             fail("should go to exception block");
@@ -48,7 +48,7 @@ class LoanCommandTest {
 
     @Test
     public void validateParams_shouldValidateFloatValues() {
-        String[] rateInvalidParams = {"IDIDI", "Dale", "10000", "5", "a.0"};
+        String[] rateInvalidParams = {"IDIDI", "DALE", "10000", "5", "a.0"};
         try {
             loanCommand.validateParams(rateInvalidParams);
             fail("should go to exception block");

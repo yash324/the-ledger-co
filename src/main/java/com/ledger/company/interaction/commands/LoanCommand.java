@@ -19,7 +19,8 @@ public class LoanCommand implements Command {
     @Override
     public String execute(String[] params) throws LedgerCoException {
         validateParams(params);
-        return commandHandler.createLoan(params[0], params[1], parseFloat(params[2]), parseFloat(params[3]), parseFloat(params[4]));
+        commandHandler.createLoan(params[0], params[1], parseFloat(params[2]), parseFloat(params[3]), parseFloat(params[4]));
+        return null;
     }
 
     public void validateParams(String[] params) throws InvalidParameterException {
