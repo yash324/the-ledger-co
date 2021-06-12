@@ -4,7 +4,7 @@ import com.ledger.company.utils.MessageConstants;
 
 public class DuplicateLoanException extends LedgerCoException {
 
-    public DuplicateLoanException(){
-        super(MessageConstants.MULTIPLE_LOANS_ERROR_MSG);
+    public DuplicateLoanException(String bankName, String borrowerName){
+        super(String.format(MessageConstants.MULTIPLE_LOANS_ERROR, borrowerName, bankName));
     }
 }

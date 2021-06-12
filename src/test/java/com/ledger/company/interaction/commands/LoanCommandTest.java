@@ -42,7 +42,7 @@ class LoanCommandTest {
             fail("should go to exception block");
         } catch (LedgerCoException ex) {
             assertTrue(ex instanceof InvalidParameterException);
-            assertEquals(MessageConstants.CANNOT_BE_ZERO, ex.getMessage());
+            assertEquals(MessageConstants.NEGATIVE_VALUE_ERROR, ex.getMessage());
         }
     }
 
@@ -50,11 +50,11 @@ class LoanCommandTest {
     public void validateParams_shouldValidateFloatValues() {
         String[] rateInvalidParams = {"IDIDI", "Dale", "10000", "5", "a.0"};
         try {
-            loanCommand.execute(rateInvalidParams);
+            loanCommand.validateParams(rateInvalidParams);
             fail("should go to exception block");
         } catch (LedgerCoException ex) {
             assertTrue(ex instanceof InvalidParameterException);
-            assertEquals(MessageConstants.VALID_DECIMALS, ex.getMessage());
+            assertEquals(MessageConstants.INVALID_DECIMAL_ERROR, ex.getMessage());
         }
     }
 
@@ -68,7 +68,7 @@ class LoanCommandTest {
             fail("should go to exception block");
         } catch (LedgerCoException ex) {
             assertTrue(ex instanceof InvalidParameterException);
-            assertEquals(String.format(MessageConstants.COMMAND_REQUIRES_N_PARAMETERS, 5), ex.getMessage());
+            assertEquals(String.format(MessageConstants.COMMAND_REQUIRES_N_PARAMETERS_ERROR, 5), ex.getMessage());
         }
     }
 

@@ -1,6 +1,7 @@
 package com.ledger.company.handler;
 
 import com.ledger.company.domain.Bank;
+import com.ledger.company.exceptions.BankNotFoundException;
 import com.ledger.company.exceptions.LedgerCoException;
 import lombok.Getter;
 
@@ -16,7 +17,7 @@ public class CommandHandler {
         this.banks = new ArrayList<>();
     }
 
-    public String loan(String bankName, String borrowerName, float principalAmount, float numYears, float interestRate) throws LedgerCoException {
+    public String createLoan(String bankName, String borrowerName, float principalAmount, float numYears, float interestRate) throws LedgerCoException {
         Optional<Bank> selectedBank = banks.stream().filter(bank -> bank.getName().equalsIgnoreCase(bankName)).findFirst();
         if(!selectedBank.isPresent()) {
             Bank bank = new Bank(bankName);
@@ -24,6 +25,15 @@ public class CommandHandler {
             banks.add(bank);
         }
         selectedBank.get().addLoan(borrowerName, principalAmount, numYears, interestRate);
-        return "";
+        return null;
+    }
+
+    public String payLumpSum(String bankName, String borrowerName, float amount, int emiNumber) throws LedgerCoException {
+        Optional<Bank> selectedBank = banks.stream().filter(bank -> bank.getName().equalsIgnoreCase(bankName)).findFirst();
+        if(!selectedBank.isPresent()) {
+            throw new BankNotFoundException(bankName);
+        }
+        selectedBank.get().addLumpSumPayment(borrowerName, amount, emiNumber);
+        return null;
     }
 }

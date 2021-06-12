@@ -19,20 +19,20 @@ public class LoanCommand implements Command {
     @Override
     public String execute(String[] params) throws LedgerCoException {
         validateParams(params);
-        return commandHandler.loan(params[0], params[1], parseFloat(params[2]), parseFloat(params[3]), parseFloat(params[4]));
+        return commandHandler.createLoan(params[0], params[1], parseFloat(params[2]), parseFloat(params[3]), parseFloat(params[4]));
     }
 
     public void validateParams(String[] params) throws InvalidParameterException {
         if (params.length != 5) {
-            throw new InvalidParameterException(String.format(MessageConstants.COMMAND_REQUIRES_N_PARAMETERS, 5));
+            throw new InvalidParameterException(String.format(MessageConstants.COMMAND_REQUIRES_N_PARAMETERS_ERROR, 5));
         }
         String[] paramsToValidate = Arrays.copyOfRange(params, 2, 5);
         for (String param : paramsToValidate) {
             if (!isFloat(param)) {
-                throw new InvalidParameterException(MessageConstants.VALID_DECIMALS);
+                throw new InvalidParameterException(MessageConstants.INVALID_DECIMAL_ERROR);
             }
             if (parseFloat(param) <= 0) {
-                throw new InvalidParameterException(MessageConstants.CANNOT_BE_ZERO);
+                throw new InvalidParameterException(MessageConstants.NEGATIVE_VALUE_ERROR);
             }
         }
     }

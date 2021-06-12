@@ -20,9 +20,9 @@ public class App {
             ReadClient readClient = new FileReadClient(new BufferedReader(new FileReader(args[0])), commandFactory);
             readClient.handleInput();
         } catch (FileNotFoundException ex) {
-            System.out.println(MessageConstants.INPUT_FILE_NOT_FOUND);
+            System.out.println(MessageConstants.INPUT_FILE_NOT_FOUND_ERROR);
         } catch (IOException ex) {
-            System.out.println(MessageConstants.TRY_AGAIN);
+            System.out.println(MessageConstants.TRY_AGAIN_ERROR);
         }
     }
 }

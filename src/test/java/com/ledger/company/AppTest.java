@@ -34,7 +34,7 @@ class AppTest {
     @Test
     void mainShouldPrintErrorIfFileNotFound() {
         App.main(new String[]{"some-non-existent-file.txt"});
-        assertEquals(MessageConstants.INPUT_FILE_NOT_FOUND + System.lineSeparator(), outContent.toString());
+        assertEquals(MessageConstants.INPUT_FILE_NOT_FOUND_ERROR + System.lineSeparator(), outContent.toString());
     }
 
     @Test
