@@ -35,7 +35,7 @@ class LoanCommandTest {
     }
 
     @Test
-    public void validateParams_shouldValidateNegativeParams(){
+    public void validateParams_shouldValidateNegativeParams() {
         String[] amountInvalidParams = {"IDIDI", "DALE", "-14", "5", "5"};
         try {
             loanCommand.validateParams(amountInvalidParams);

@@ -14,7 +14,7 @@ public class Balance {
     private final int emisRemaining;
 
     @Override
-    public String toString(){
+    public String toString() {
         return String.format("%s %s %s %s", bankName, borrowerName, amountPaid, emisRemaining);
     }
 }

@@ -12,6 +12,7 @@ import static java.lang.Float.parseFloat;
 
 public class LoanCommand implements Command {
     private final CommandHandler commandHandler;
+
     public LoanCommand(CommandHandler commandHandler) {
         this.commandHandler = commandHandler;
     }

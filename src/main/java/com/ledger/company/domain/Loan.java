@@ -44,11 +44,11 @@ public class Loan {
         return Math.min(getEmiAmount(totalPayableAmount) * emiNumber + lumpSumPaymentsTotal, totalPayableAmount);
     }
 
-    private float getEmiAmount(float totalPayableAmount){
+    private float getEmiAmount(float totalPayableAmount) {
         return (float) Math.ceil(totalPayableAmount / (periodInYears * 12));
     }
 
-    private float getTotalPayableAmount(){
+    private float getTotalPayableAmount() {
         return principalAmount + (principalAmount * periodInYears * interestRate / 100);
     }
 

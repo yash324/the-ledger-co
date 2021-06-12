@@ -23,11 +23,11 @@ public abstract class ReadClient {
             while (true) {
                 String inputLine = this.inputReader.readLine();
                 lineCount++;
-                if(inputLine == null) {
+                if (inputLine == null) {
                     break;
                 }
                 inputLine = inputLine.trim();
-                if(inputLine.isEmpty()) {
+                if (inputLine.isEmpty()) {
                     continue;
                 }
                 processInputLine(inputLine, lineCount);
@@ -45,7 +45,7 @@ public abstract class ReadClient {
 
         try {
             String result = commandFactory.executeCommand(command, params);
-            if (result != null && !result.isEmpty()){
+            if (result != null && !result.isEmpty()) {
                 System.out.println(result);
             }
         } catch (Exception ex) {

@@ -49,7 +49,7 @@ class BalanceCommandTest {
     }
 
     @Test
-    public void validateParams_shouldValidateNegativeEmiCountParam(){
+    public void validateParams_shouldValidateNegativeEmiCountParam() {
         String[] emiCountInvalidParams = {"IDIDI", "DALE", "-2"};
         try {
             balanceCommand.validateParams(emiCountInvalidParams);
@@ -61,7 +61,7 @@ class BalanceCommandTest {
     }
 
     @Test
-    public void execute_shouldThrowExceptionWhenValidationFails(){
+    public void execute_shouldThrowExceptionWhenValidationFails() {
         String[] params = {"IDIDI", "DALE", "10000a", "3", "5.1"};
         assertThrows(InvalidParameterException.class, () -> balanceCommand.execute(params));
         verifyZeroInteractions(commandHandler);

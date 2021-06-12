@@ -73,7 +73,7 @@ class PaymentCommandTest {
     }
 
     @Test
-    public void validateParams_shouldValidateNegativeAmountParam(){
+    public void validateParams_shouldValidateNegativeAmountParam() {
         String[] amountInvalidParams = {"IDIDI", "DALE", "-14", "5"};
         try {
             paymentCommand.validateParams(amountInvalidParams);
@@ -85,7 +85,7 @@ class PaymentCommandTest {
     }
 
     @Test
-    public void validateParams_shouldValidateNegativeEmiCountParam(){
+    public void validateParams_shouldValidateNegativeEmiCountParam() {
         String[] emiCountInvalidParams = {"IDIDI", "DALE", "14000", "-2"};
         try {
             paymentCommand.validateParams(emiCountInvalidParams);

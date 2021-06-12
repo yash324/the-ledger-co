@@ -11,6 +11,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class BankTest {
     private Bank bank;
+
     @BeforeEach
     public void setup() throws LedgerCoException {
         this.bank = new Bank("IDIDI");
@@ -18,7 +19,7 @@ class BankTest {
     }
 
     @Test
-    void addLoan_shouldAddLoanSuccessfully()  {
+    void addLoan_shouldAddLoanSuccessfully() {
         assertEquals(1, bank.getLoans().size());
         assertEquals("DALE", bank.getLoans().get(0).getBorrowerName());
         assertEquals(10000, bank.getLoans().get(0).getPrincipalAmount());

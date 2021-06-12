@@ -20,11 +20,12 @@ public class BalanceCommand implements Command {
         validateParams(params);
         return commandHandler.getBalance(params[0], params[1], parseInt(params[2])).toString();
     }
+
     public void validateParams(String[] params) throws LedgerCoException {
         if (params.length != 3) {
             throw new InvalidParameterException(String.format(MessageConstants.COMMAND_REQUIRES_N_PARAMETERS_ERROR, 3));
         }
-        if(!isInteger(params[2])){
+        if (!isInteger(params[2])) {
             throw new InvalidParameterException(MessageConstants.INVALID_INTEGER_ERROR);
         }
         if (parseInt(params[2]) < 0) {

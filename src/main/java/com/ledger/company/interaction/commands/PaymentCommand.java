@@ -31,7 +31,7 @@ public class PaymentCommand implements Command {
         if (!isFloat(params[2])) {
             throw new InvalidParameterException(MessageConstants.INVALID_DECIMAL_ERROR);
         }
-        if(!isInteger(params[3])){
+        if (!isInteger(params[3])) {
             throw new InvalidParameterException(MessageConstants.INVALID_INTEGER_ERROR);
         }
         if (parseFloat(params[2]) < 0 || parseInt(params[3]) < 0) {

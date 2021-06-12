@@ -20,7 +20,7 @@ public class CommandHandler {
 
     public void createLoan(String bankName, String borrowerName, float principalAmount, float numYears, float interestRate) throws LedgerCoException {
         Optional<Bank> selectedBank = banks.stream().filter(bank -> bank.getName().equalsIgnoreCase(bankName)).findFirst();
-        if(!selectedBank.isPresent()) {
+        if (!selectedBank.isPresent()) {
             Bank bank = new Bank(bankName);
             selectedBank = Optional.of(bank);
             banks.add(bank);
@@ -30,7 +30,7 @@ public class CommandHandler {
 
     public void payLumpSum(String bankName, String borrowerName, float amount, int emiNumber) throws LedgerCoException {
         Optional<Bank> selectedBank = banks.stream().filter(bank -> bank.getName().equalsIgnoreCase(bankName)).findFirst();
-        if(!selectedBank.isPresent()) {
+        if (!selectedBank.isPresent()) {
             throw new BankNotFoundException(bankName);
         }
         selectedBank.get().addLumpSumPayment(borrowerName, amount, emiNumber);
@@ -38,7 +38,7 @@ public class CommandHandler {
 
     public Balance getBalance(String bankName, String borrowerName, int emiNumber) throws LedgerCoException {
         Optional<Bank> selectedBank = banks.stream().filter(bank -> bank.getName().equalsIgnoreCase(bankName)).findFirst();
-        if(!selectedBank.isPresent()) {
+        if (!selectedBank.isPresent()) {
             throw new BankNotFoundException(bankName);
         }
         return selectedBank.get().getLoanBalance(borrowerName, emiNumber);

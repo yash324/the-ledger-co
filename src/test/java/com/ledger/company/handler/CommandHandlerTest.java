@@ -17,7 +17,7 @@ class CommandHandlerTest {
     @Test
     void addLoan_shouldAddBankAndLoanIfNonExistent() throws LedgerCoException {
         CommandHandler commandHandler = new CommandHandler();
-        commandHandler.createLoan("IDIDI", "DALE", 10000, 5,4 );
+        commandHandler.createLoan("IDIDI", "DALE", 10000, 5, 4);
         assertEquals(1, commandHandler.getBanks().size());
         assertEquals("IDIDI", commandHandler.getBanks().get(0).getName());
         List<Loan> loans = commandHandler.getBanks().get(0).getLoans();
@@ -31,9 +31,9 @@ class CommandHandlerTest {
     @Test
     void addLoan_shouldAddLoanIfBankExists() throws LedgerCoException {
         CommandHandler commandHandler = new CommandHandler();
-        commandHandler.createLoan("IDIDI", "HARRY", 2000, 2,3 );
+        commandHandler.createLoan("IDIDI", "HARRY", 2000, 2, 3);
 
-        commandHandler.createLoan("IDIDI", "DALE", 10000, 5,4 );
+        commandHandler.createLoan("IDIDI", "DALE", 10000, 5, 4);
 
         assertEquals(1, commandHandler.getBanks().size());
         assertEquals("IDIDI", commandHandler.getBanks().get(0).getName());
@@ -49,14 +49,14 @@ class CommandHandlerTest {
     @Test
     void payLumpSum_shouldThrowExceptionIfBankDoesntExist() throws LedgerCoException {
         CommandHandler commandHandler = new CommandHandler();
-        commandHandler.createLoan("IDIDI", "HARRY", 2000, 2,3 );
+        commandHandler.createLoan("IDIDI", "HARRY", 2000, 2, 3);
         assertThrows(BankNotFoundException.class, () -> commandHandler.payLumpSum("MBI", "DALE", 10000, 5));
     }
 
     @Test
     void payLumpSum_shouldAddPayment() throws LedgerCoException {
         CommandHandler commandHandler = new CommandHandler();
-        commandHandler.createLoan("IDIDI", "HARRY", 2000, 2,3 );
+        commandHandler.createLoan("IDIDI", "HARRY", 2000, 2, 3);
         commandHandler.payLumpSum("IDIDI", "HARRY", 1000, 5);
         List<LumpSumPayment> lumpSumPayments = commandHandler.getBanks().get(0).getLoans().get(0).getLumpSumPayments();
         assertEquals(1, lumpSumPayments.size());

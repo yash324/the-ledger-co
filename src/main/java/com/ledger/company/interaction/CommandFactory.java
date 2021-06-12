@@ -33,7 +33,7 @@ public class CommandFactory {
     }
 
     public String executeCommand(String name, String[] params) throws LedgerCoException {
-        if(commands.containsKey(name)) {
+        if (commands.containsKey(name)) {
             return commands.get(name).execute(params);
         } else {
             throw new CommandNotFoundException(name);
