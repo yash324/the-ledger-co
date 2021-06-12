@@ -1,14 +1,20 @@
 package com.ledger.company.client;
 
+import com.ledger.company.exceptions.CommandNotFoundException;
+import com.ledger.company.interaction.CommandFactory;
+import com.ledger.company.utils.MessageConstants;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.util.Arrays;
 
 public abstract class ReadClient {
     private final BufferedReader inputReader;
+    private final CommandFactory commandFactory;
 
-    public ReadClient(BufferedReader inputReader) {
+    public ReadClient(BufferedReader inputReader, CommandFactory commandFactory) {
         this.inputReader = inputReader;
+        this.commandFactory = commandFactory;
     }
 
     public void handleInput() throws IOException {
@@ -35,6 +41,14 @@ public abstract class ReadClient {
         String command = inputChunks[0];
         String[] params = Arrays.copyOfRange(inputChunks, 1, inputChunks.length);
 
-        // TODO: handle command
+        try {
+            commandFactory.executeCommand(command, params);
+        } catch (Exception ex) {
+            if (ex instanceof CommandNotFoundException) {
+                System.out.println(String.format(MessageConstants.ERROR_MESSAGE, ex.getMessage()));
+            } else {
+                System.out.println(MessageConstants.INTERNAL_SERVER_ERROR);
+            }
+        }
     }
 }
