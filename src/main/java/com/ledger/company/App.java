@@ -1,24 +1,21 @@
 package com.ledger.company;
 
-import com.ledger.company.client.FileReadClient;
-import com.ledger.company.client.ReadClient;
+import com.ledger.company.client.IOClient;
 import com.ledger.company.handler.CommandHandler;
 import com.ledger.company.interaction.CommandFactory;
 import com.ledger.company.utils.MessageConstants;
 
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 
 public class App {
 
     public static void main(String[] args) {
         CommandHandler commandHandler = new CommandHandler();
         CommandFactory commandFactory = CommandFactory.init(commandHandler);
-        try {
-            ReadClient readClient = new FileReadClient(new BufferedReader(new FileReader(args[0])), commandFactory);
-            readClient.handleInput();
+        try (BufferedReader inputReader = new BufferedReader(new FileReader(args[0]))){
+            BufferedWriter outputWriter = new BufferedWriter(new OutputStreamWriter(System.out));
+            IOClient ioClient = new IOClient(inputReader, outputWriter, commandFactory);
+            ioClient.handleInput();
         } catch (FileNotFoundException ex) {
             System.out.println(MessageConstants.INPUT_FILE_NOT_FOUND_ERROR);
         } catch (IOException ex) {
