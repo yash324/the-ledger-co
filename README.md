@@ -74,6 +74,7 @@ The BALANCE command receives a Bank name, Borrower name and a EMI number along w
 by the borrower, including all the Lump Sum amounts paid including that EMI number, and the no of EMIs remaining.
 
 Input format - `BALANCE <BANK_NAME> <BORROWER_NAME> <EMI_NO>`
+
 Example - BALANCE MBI Harry 12 means - print the amount paid including 12th EMI, and EMIs remaining for user Harry
 against the lender MBI.
 
